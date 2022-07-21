@@ -2,7 +2,7 @@ import React from 'react'
 import { MusicNote, TwitchLogo } from 'phosphor-react'
 import { Link } from 'react-router-dom'
 
-import CrystalLogo from '../assets/Crystal.svg'
+import CrystalLogo from '../assets/crystal.svg'
 
 export const LandingPage: React.FC = () => {
   return (
