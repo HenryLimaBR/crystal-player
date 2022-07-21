@@ -1,0 +1,8 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html, body, #root {
+  @apply w-full min-h-screen font-noto-sans text-zinc-100;
+  -webkit-font-smoothing: antialiased;
+}
