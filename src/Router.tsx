@@ -9,7 +9,8 @@ export const Router: React.FC = () => {
     <Routes>
       <Route path="/" element={<LandingPage />} />
       <Route path="/panel" element={<Panel />} />
-      <Route path="/get-started" element={<LandingPage />} />
+
+      <Route path="*" element={<LandingPage />} />
     </Routes>
   )
 }
