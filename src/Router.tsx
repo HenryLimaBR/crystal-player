@@ -10,8 +10,8 @@ export const Router: React.FC = () => {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
-      <Route path='/signIn' element={<SignIn />} />
-      <Route path='/signOut' element={<SignOut />} />
+      <Route path='/signin' element={<SignIn />} />
+      <Route path='/signout' element={<SignOut />} />
       <Route path="/panel" element={<Panel />} />
 
       <Route path="*" element={<LandingPage />} />

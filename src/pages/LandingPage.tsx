@@ -31,7 +31,7 @@ export const LandingPage: React.FC = () => {
       </div>
 
       <Link
-        to='/signIn'
+        to='/signin'
         className='bg-gradient-to-r from-blue-500 to-emerald-400 px-4 py-2 flex gap-2 items-center rounded hover:saturate-50 transition-all duration-200 ease-in-out hover:ring-2 ring-zinc-100 animate-fadeIn'
       >
         <span className='font-bold text-lg'>
