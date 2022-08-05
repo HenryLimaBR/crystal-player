@@ -13,9 +13,6 @@ export async function getUser(): Promise<TwitchUserType> {
       'Client-Id': twitchConfig.clientId,
     },
   })
-
-  console.log(data)
-
   return data.data[0]
 }
 
