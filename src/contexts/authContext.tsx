@@ -23,7 +23,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
 
   const navigate = useNavigate() 
 
-  const signInUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${twitchConfig.clientId}&response_type=token&redirect_uri=http://${window.location.host}/signIn&scope=${twitchConfig.scopes.join(' ')}`
+  const signInUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${twitchConfig.clientId}&response_type=token&redirect_uri=${window.location.protocol}//${window.location.host}/signIn&scope=${twitchConfig.scopes.join(' ')}`
 
   const signIn = async () => {
     const token = localStorage.getItem('@crystal/token')
