@@ -30,17 +30,15 @@ export const Panel: React.FC = () => {
         })
 
         client.on('message', (channel, userstate, message) => {
-          setMessages(
-            [
-              ...messages,
-              {
-                content: message,
-                user: userstate['display-name'] ?? userstate.username ?? '?',
-                color: userstate.color,
-                timestamp: new Date(),
-              }
-            ]
-          )
+          setMessages(() => [
+            ...messages,
+            {
+              content: message,
+              user: userstate['display-name'] ?? userstate.username ?? '?',
+              color: userstate.color,
+              timestamp: new Date(),
+            }
+          ])
         })
 
         setClient(client)
@@ -95,7 +93,7 @@ export const Panel: React.FC = () => {
         )
       }
 
-      <div className='w-[90vw] h-[40vh] p-4 bg-zinc-900 rounded bg-opacity-50 flex flex-col-reverse'>
+      <div className='w-[90vw] h-[40vh] p-4 bg-zinc-900 rounded bg-opacity-50 flex flex-col-reverse overflow-y-scroll'>
         {
           messages.map(({ content, user, color, timestamp }) => (
             <p key={`${user}|${timestamp.toString()}`} className='text-sm text-gray-100'>
