@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
 import type { TwitchUserType } from '../types/TwitchTypings'
 
 import twitchConfig from '../config/twitchConfig'
-import { api, getUser } from '../services/twitch-data'
+import { api, getUser, validateToken } from '../services/twitch-data'
 
 interface AuthContextProps {
   user: TwitchUserType | null
@@ -20,12 +21,13 @@ interface AuthContextProviderProps {
 export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ children }) => {
   const [user, setUser] = React.useState<TwitchUserType | null>(null)
 
+  const navigate = useNavigate() 
+
   const signInUrl = `https://id.twitch.tv/oauth2/authorize?client_id=${twitchConfig.clientId}&response_type=token&redirect_uri=http://${window.location.host}/signIn&scope=${twitchConfig.scopes.join(' ')}`
 
   const signIn = async () => {
     const token = localStorage.getItem('@crystal/token')
     api.defaults.headers.common.Authorization = `Bearer ${token}`
-    console.log(api.defaults.headers.common.Authorization)
     const user = await getUser()
     setUser(user)
   }
@@ -35,6 +37,26 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
     api.defaults.headers.common.Authorization = ''
     setUser(null)
   }
+
+  useEffect(() => {
+    const validate = async () => {
+      const token = localStorage.getItem('@crystal/token')
+      api.defaults.headers.common.Authorization = `Bearer ${token}`
+
+      if (token) {
+        const tokenInfo = await validateToken()
+
+        if (tokenInfo.status === 200) {
+          signIn()
+        } else {
+          signOut()
+          navigate('/signOut')
+        }
+      }
+    }
+
+    validate()
+  }, [])
 
   return (
     <AuthContext.Provider value={{
