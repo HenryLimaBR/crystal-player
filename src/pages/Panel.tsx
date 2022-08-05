@@ -9,7 +9,7 @@ type MessageContent = {
   content: string
   user: string
   color?: string
-  timestamp: string
+  timestamp: Date
 }
 
 export const Panel: React.FC = () => {
@@ -37,7 +37,7 @@ export const Panel: React.FC = () => {
                 content: message,
                 user: userstate['display-name'] ?? userstate.username ?? '?',
                 color: userstate.color,
-                timestamp: new Date().toLocaleTimeString(),
+                timestamp: new Date(),
               }
             ]
           )
@@ -97,9 +97,9 @@ export const Panel: React.FC = () => {
 
       <div className='w-[90vw] h-[40vh] p-4 bg-zinc-900 rounded bg-opacity-50 flex flex-col-reverse'>
         {
-          messages.map(({ content, user, color, timestamp }, index) => (
-            <p key={index + user + timestamp} className='text-sm text-gray-100'>
-              <span className='text-xs'>{timestamp}</span>
+          messages.map(({ content, user, color, timestamp }) => (
+            <p key={`${user}|${timestamp.toString()}`} className='text-sm text-gray-100'>
+              <span className='text-xs'>{new Date(timestamp).toLocaleTimeString()}</span>
               <span> - </span>
               <span className='text-bold text-emerald-400' style={{ color }}>{user}</span>
               <span>: </span>
