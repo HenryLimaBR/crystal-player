@@ -42,7 +42,7 @@ export const SignIn: React.FC = () => {
     }
 
     validate()
-  }, [])
+  }, [urlHasToken])
 
   return (
     <div className='w-full min-h-screen flex justify-center items-center gap-4 bg-gradient-to-br from-purple-700 to-blue-400'>
