@@ -24,7 +24,7 @@ export const Panel: React.FC = () => {
                 {user.display_name}
               </h3>
 
-              <p className='text-sm text-clip'>
+              <p className='text-sm truncate max-w-[192px]' title={user.description}>
                 {user.description}
               </p>
             </div>
