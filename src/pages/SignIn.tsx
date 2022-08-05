@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import { CircleNotch } from 'phosphor-react'
 
 import type { TwitchAuthorizeResponseType } from '../types/TwitchTypings'
@@ -10,9 +10,10 @@ import { validateToken } from '../services/twitch-data'
 
 export const SignIn: React.FC = () => {
   const { signInUrl, signIn, signOut } = useContext(AuthContext)
+  const location = useLocation()
   const navigate = useNavigate()
 
-  const urlHasToken = window.location.hash.includes('access_token')
+  const urlHasToken = location.hash.includes('access_token')
 
   useEffect(() => {
     const validate = async () => {
@@ -42,7 +43,7 @@ export const SignIn: React.FC = () => {
     }
 
     validate()
-  }, [urlHasToken])
+  }, [location])
 
   return (
     <div className='w-full min-h-screen flex justify-center items-center gap-4 bg-gradient-to-br from-purple-700 to-blue-400'>
