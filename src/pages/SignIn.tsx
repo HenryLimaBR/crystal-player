@@ -52,11 +52,13 @@ export const SignIn: React.FC = () => {
 
   return (
     <div className='w-full min-h-screen flex justify-center items-center gap-4 bg-gradient-to-br from-purple-700 to-blue-400'>
-      <h1 className='text-2xl'>
+      <h1 className='text-2xl animate-fadeIn'>
         You will be redirected soon!
       </h1>
 
-      <CircleNotch className='animate-spin' size={40} />
+      <span className='animate-zoomIn'>
+        <CircleNotch className='animate-spin' size={40} />
+      </span>
     </div>
   )
 }
