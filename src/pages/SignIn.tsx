@@ -15,35 +15,40 @@ export const SignIn: React.FC = () => {
 
   const urlHasToken = location.hash.includes('access_token')
 
-  useEffect(() => {
-    const validate = async () => {
-      const token = localStorage.getItem('@crystal/token')
+  const validate = async () => {
+    const token = localStorage.getItem('@crystal/token')
 
-      if (!token && !urlHasToken) {
-        window.location.href = signInUrl
-      } else if (!token && urlHasToken) {
-        const tokenData = parseHash<TwitchAuthorizeResponseType>(window.location.hash)
-        localStorage.setItem('@crystal/token', tokenData.access_token)
-      } else if (token && !urlHasToken) {
-        const tokenInfo = await validateToken()
+    if (!token && !urlHasToken) {
+      window.location.href = signInUrl
+    } else if (!token && urlHasToken) {
+      const tokenData = parseHash<TwitchAuthorizeResponseType>(window.location.hash)
+      localStorage.setItem('@crystal/token', tokenData.access_token)
+    } else if (token && !urlHasToken) {
+      const tokenInfo = await validateToken()
 
-        if (tokenInfo.status === 200) {
-          signIn()
-          navigate('/panel')
-        } else {
-          signOut()
-          navigate('/signIn')
-        }
-      } else if (token && urlHasToken) {
+      if (tokenInfo.status === 200) {
         signIn()
         navigate('/panel')
       } else {
-        navigate('/')
+        signOut()
+        navigate('/signIn')
       }
+    } else if (token && urlHasToken) {
+      signIn()
+      navigate('/panel')
+    } else {
+      navigate('/')
     }
+  }
 
+  useEffect(() => {
     validate()
-  })
+    const timer = setInterval(validate, 1500)
+
+    return () => {
+      clearInterval(timer)
+    }
+  }, [])
 
   return (
     <div className='w-full min-h-screen flex justify-center items-center gap-4 bg-gradient-to-br from-purple-700 to-blue-400'>
