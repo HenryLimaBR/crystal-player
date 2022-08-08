@@ -27,14 +27,14 @@ export const SignIn: React.FC = () => {
       const tokenInfo = await validateToken()
 
       if (tokenInfo.status === 200) {
-        signIn()
+        await signIn()
         navigate('/panel')
       } else {
-        signOut()
+        await signOut()
         navigate('/signIn')
       }
     } else if (token && urlHasToken) {
-      signIn()
+      await signIn()
       navigate('/panel')
     } else {
       navigate('/')

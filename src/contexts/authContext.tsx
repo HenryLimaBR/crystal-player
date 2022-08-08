@@ -8,8 +8,8 @@ import { api, getUser, validateToken } from '../services/twitch-data'
 interface AuthContextProps {
   user: TwitchUserType | null
   signInUrl: string
-  signIn: () => void
-  signOut: () => void
+  signIn: () => Promise<void>
+  signOut: () => Promise<void>
 }
 
 export const AuthContext = React.createContext({} as AuthContextProps)
@@ -47,9 +47,9 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
         const tokenInfo = await validateToken()
 
         if (tokenInfo.status === 200) {
-          signIn()
+          await signIn()
         } else {
-          signOut()
+          await signOut()
           navigate('/signOut')
         }
       }
