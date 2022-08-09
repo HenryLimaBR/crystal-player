@@ -8,15 +8,13 @@ export const SignOut: React.FC = () => {
   const { signOut } = useContext(AuthContext)
   const navigate = useNavigate()
 
-  useEffect(() => {
-    const token = localStorage.getItem('@crystal/token')
+  const handleSignOut = async () => {
+    await signOut()
+    navigate('/')
+  }
 
-    if (token) {
-      signOut()
-      navigate('/')
-    } else {
-      navigate('/')
-    }
+  useEffect(() => {
+    handleSignOut()
   }, [])
 
   return (
