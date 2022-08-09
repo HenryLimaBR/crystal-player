@@ -15,7 +15,7 @@ export const SignIn: React.FC = () => {
 
   const urlHasToken = location.hash.includes('access_token')
 
-  const validate = async () => {
+  const handleSignIn = async () => {
     const token = localStorage.getItem('@crystal/token')
 
     if (!token && !urlHasToken) {
@@ -42,8 +42,8 @@ export const SignIn: React.FC = () => {
   }
 
   useEffect(() => {
-    validate()
-    const timer = setInterval(validate, 1500)
+    handleSignIn()
+    const timer = setInterval(handleSignIn, 1500)
 
     return () => {
       clearInterval(timer)
