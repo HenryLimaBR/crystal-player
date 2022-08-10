@@ -21,5 +21,8 @@ module.exports = {
         "@typescript-eslint"
     ],
     "rules": {
+        "ignorePatterns": [
+            "*.cjs"
+        ]
     }
 }
