@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import type { TwitchUserType } from '../types/TwitchTypings'
 
 import twitchConfig from '../config/twitchConfig'
-import { api, getUser, validateToken } from '../services/twitch-data'
+import { api, getUser, revokeToken, validateToken } from '../services/twitch-data'
 
 interface AuthContextProps {
   user: TwitchUserType | null
@@ -34,6 +34,7 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
 
   const signOut = async () => {
     localStorage.removeItem('@crystal/token')
+    await revokeToken()
     api.defaults.headers.common.Authorization = ''
     setUser(null)
   }
