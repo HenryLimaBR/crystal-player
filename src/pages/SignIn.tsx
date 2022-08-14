@@ -6,7 +6,6 @@ import type { TwitchAuthorizeResponseType } from '../types/TwitchTypings'
 
 import { AuthContext } from '../contexts/authContext'
 import { parseHash } from '../utils/url-utils'
-import { validateToken } from '../services/twitch-data'
 
 export const SignIn: React.FC = () => {
   const { signInUrl, signIn, signOut } = useContext(AuthContext)
@@ -18,21 +17,15 @@ export const SignIn: React.FC = () => {
   const handleSignIn = async () => {
     const token = localStorage.getItem('@crystal/token')
 
+    if (token && !urlHasToken) {
+      await signOut()
+    }
+
     if (!token && !urlHasToken) {
       window.location.href = signInUrl
     } else if (!token && urlHasToken) {
       const tokenData = parseHash<TwitchAuthorizeResponseType>(window.location.hash)
       localStorage.setItem('@crystal/token', tokenData.access_token)
-    } else if (token && !urlHasToken) {
-      const tokenInfo = await validateToken()
-
-      if (tokenInfo.status === 200) {
-        await signIn()
-        navigate('/panel')
-      } else {
-        await signOut()
-        navigate('/signIn')
-      }
     } else if (token && urlHasToken) {
       await signIn()
       navigate('/panel')
