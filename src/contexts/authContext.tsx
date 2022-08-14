@@ -31,7 +31,11 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
 
   const signOut = async () => {
     localStorage.removeItem('@crystal/token')
-    await revokeToken()
+    try {
+      await revokeToken()
+    } catch (e) {
+      console.warn('Could not revoke Twitch token', e)
+    }
     api.defaults.headers.common.Authorization = ''
     setUser(null)
   }
