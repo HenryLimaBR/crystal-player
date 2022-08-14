@@ -23,9 +23,10 @@ export async function validateToken() {
 }
 
 export async function revokeToken() {
+  const token = (api.defaults.headers.common.Authorization as string).split(' ')[1]
   const formData = new FormData()
   formData.append('client_id', twitchConfig.clientId)
-  formData.append('token', api.defaults.headers.common.Authorization as string)
+  formData.append('token', token)
   const response = await api.post('/oauth2/revoke', formData, {
     headers: {
       'Content-Type': 'application/x-www-form-urlencoded',
