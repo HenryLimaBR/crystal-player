@@ -8,30 +8,17 @@ import { AuthContext } from '../contexts/authContext'
 import { parseHash } from '../utils/url-utils'
 
 export const SignIn: React.FC = () => {
-  const { signInUrl, signIn, signOut } = useContext(AuthContext)
+  const { signInUrl, signIn } = useContext(AuthContext)
   const location = useLocation()
   const navigate = useNavigate()
-
   const urlHasToken = location.hash.includes('access_token')
 
   const handleSignIn = async () => {
-    const token = localStorage.getItem('@crystal/token')
-
-    if (token && !urlHasToken) {
-      await signOut()
-    }
-
-    if (!token && !urlHasToken) {
-      window.location.href = signInUrl
-    } else if (!token && urlHasToken) {
-      const tokenData = parseHash<TwitchAuthorizeResponseType>(window.location.hash)
-      localStorage.setItem('@crystal/token', tokenData.access_token)
-    } else if (token && urlHasToken) {
-      await signIn()
-      navigate('/panel')
-    } else {
-      navigate('/')
-    }
+    !urlHasToken && (window.location.href = signInUrl)
+    const tokenData = parseHash<TwitchAuthorizeResponseType>(window.location.hash)
+    localStorage.setItem('@crystal/token', tokenData.access_token)
+    await signIn()
+    navigate('/panel')
   }
 
   useEffect(() => {
