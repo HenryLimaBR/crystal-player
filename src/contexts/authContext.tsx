@@ -2,7 +2,7 @@ import React from 'react'
 import type { TwitchUserType } from '../types/TwitchTypings'
 
 import twitchConfig from '../config/twitchConfig'
-import { api, getUser, revokeToken } from '../services/twitch-data'
+import { api, getUser } from '../services/twitch-api'
 
 interface AuthContextProps {
   user: TwitchUserType | null
@@ -31,11 +31,6 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
 
   const signOut = async () => {
     localStorage.removeItem('@crystal/token')
-    try {
-      await revokeToken()
-    } catch (e) {
-      console.warn('Could not revoke Twitch token', e)
-    }
     api.defaults.headers.common.Authorization = ''
     setUser(null)
   }
