@@ -13,7 +13,7 @@ export interface VideoInfo {
   }
 }
 
-export interface VideoList {
+export interface PlaylistInfo {
   title: string
   listId: string
   url: string
