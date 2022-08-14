@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import type { TwitchUserType } from '../types/TwitchTypings'
 
 import twitchConfig from '../config/twitchConfig'
@@ -34,6 +34,14 @@ export const AuthContextProvider: React.FC<AuthContextProviderProps> = ({ childr
     api.defaults.headers.common.Authorization = ''
     setUser(null)
   }
+
+  useEffect(() => {
+    const token = localStorage.getItem('@crystal/token')
+    if (token) {
+      api.defaults.headers.common.Authorization = `Bearer ${token}`
+      getUser().then(setUser)
+    }
+  }, [])
 
   return (
     <AuthContext.Provider value={{
