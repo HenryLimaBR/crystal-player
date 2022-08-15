@@ -9,7 +9,7 @@ export const VideoPlayer: React.FC = () => {
 
   return (
     <div className='w-full h-[50%]'>
-      <div className='aspect-video rounded overflow-hidden'>
+      <div className='aspect-video rounded overflow-hidden bg-black bg-opacity-75'>
         <ReactPlayer
           url={currentVideo}
           playing={true}
