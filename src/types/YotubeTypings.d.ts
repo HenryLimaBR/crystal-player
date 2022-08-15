@@ -1,4 +1,4 @@
-export interface VideoInfo {
+export interface PlaylistVideoInfo {
   title: string
   videoId: string
   listId: string
@@ -22,8 +22,29 @@ export interface PlaylistInfo {
   date: string
   image: string
   thumbnail: string
-  videos: VideoInfo[]
+  videos: PlaylistVideoInfo[]
   alertInfo: string
+  author: {
+    name: string
+    url: string
+  }
+}
+
+export interface VideoInfo {
+  title: string
+  description: string
+  url: string
+  videoId: string
+  duration: {
+    seconds: number
+    timestamp: string
+  },
+  views: number
+  genre: string
+  uploadDate: string
+  ago: string
+  image: string
+  thumbnail: string
   author: {
     name: string
     url: string
